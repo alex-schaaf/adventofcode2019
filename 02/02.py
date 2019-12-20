@@ -1,9 +1,9 @@
 import numpy as np
+from copy import copy
 
 
 def process_intcode(intcode):
-    indices = np.arange(0, len(intcode), 4)
-    for i in indices:
+    for i in range(0, len(intcode), 4):
         opcode = intcode[i]
         if opcode == 99:
             return intcode
@@ -23,8 +23,22 @@ def process_intcode(intcode):
 if __name__ == "__main__":
     with open("02/input.txt", "r") as f:
         intcode = [int(value) for value in f.readline().split(",")]
-    # preprocess
-    intcode[1] = 12
-    intcode[2] = 2
-    result = process_intcode(intcode)
-    print(result)
+
+    # part 1
+    intcode1 = copy(intcode)
+    intcode1[1] = 12
+    intcode1[2] = 2
+    result = process_intcode(intcode1)
+    print(f"Result #1: {result[0]}")
+
+    # part 2
+    for noun in range(99):
+        for verb in range(99):
+            intcode_ = copy(intcode)
+            intcode_[1] = noun
+            intcode_[2] = verb
+            result_ = process_intcode(intcode_)
+
+            if result_[0] == 19690720:
+                print(f"Result #2:\n100 * {noun} + {verb} = {100 * noun + verb}")
+                break

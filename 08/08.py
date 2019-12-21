@@ -23,3 +23,17 @@ answer1 = np.count_nonzero(img[fewest_0_layer] == 1) \
         * np.count_nonzero(img[fewest_0_layer] == 2)
 
 print(f"Answer #1: {answer1}")
+
+
+i_img = np.zeros( (6, 25)).astype(int)
+
+for x in range(25):
+    for y in range(6):
+        i_min = np.argwhere(img[:, y, x] != 2).min()
+        i_img[y, x] = img[i_min, y, x]
+
+
+import matplotlib.pyplot as plt
+
+plt.imshow(i_img)
+plt.show()

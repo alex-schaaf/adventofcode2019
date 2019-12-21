@@ -44,3 +44,20 @@ for node in tqdm(nodes):
     counter += len(flatten(L)) - 1
 
 print(f"Result #1: {counter}")
+
+you_com = flatten(find_path(graph, "YOU", "COM"))
+san_com = flatten(find_path(graph, "SAN", "COM"))
+
+distances = {}
+for node in set(you_com) & set(san_com):
+    distances[node] = len(flatten(find_path(graph, node, "COM")))
+
+longest = None
+longest_distance = 0
+for k, v in distances.items():
+    if v > longest_distance:
+        longest_distance = v
+        longest = k
+
+jumps = len(set(flatten(find_path(graph, "YOU", longest)) + flatten(find_path(graph, "SAN", longest)))) - 3
+print(f"Result #2: {jumps}")

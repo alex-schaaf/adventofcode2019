@@ -11,9 +11,12 @@ def parse_program(program:list) -> list:
         opcode = int(instruction1[-2:])
         pm3, pm2, pm1 = [int(pm) for pm in instruction1[:-2]]
 
-        loc1 = program[pointer + 1] if pm1 == 0 else pointer + 1
-        loc2 = program[pointer + 2] if pm2 == 0 else pointer + 2
-        loc3 = program[pointer + 3]
+        try:
+            loc1 = program[pointer + 1] if pm1 == 0 else pointer + 1
+            loc2 = program[pointer + 2] if pm2 == 0 else pointer + 2
+            loc3 = program[pointer + 3]
+        except IndexError:
+            break
 
         if opcode == 1:
             program[loc3] = program[loc1] + program[loc2]
@@ -22,7 +25,7 @@ def parse_program(program:list) -> list:
             program[loc3] = program[loc1] * program[loc2]
             pointer += 4
         elif opcode == 3:
-            program[program[pointer + 1]] = 5
+            program[program[pointer + 1]] = int(input("Input <int>: "))
             pointer += 2
         elif opcode == 4:
             print(program[loc1])
@@ -55,4 +58,5 @@ def parse_program(program:list) -> list:
     return program
 
 
-parse_program(program)
+parse_program(copy(program))
+parse_program(copy(program))
